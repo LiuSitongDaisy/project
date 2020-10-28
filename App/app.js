@@ -35,6 +35,13 @@ var insertRouter = require('./routes/insert');
 /* --- Pet Owner -------------- */
 var newPetRouter = require('./routes/new_pet');
 
+/*---CareTaker------------------*/
+var salaryRouter = require('./routes/salary');
+
+/*---Admin----------------------*/
+var editsalarysettingsRouter = require('./routes/edit_salary_settings');
+var summaryinfoRouter = require('./routes/summary_info');
+
 var app = express();
 
 // view engine setup
@@ -77,6 +84,13 @@ app.use('/insert', insertRouter);
 
 /* --- Pet Owner -------------- */
 app.use('/new_pet', newPetRouter);
+
+/*---Care Taker-----------------*/
+app.use('salary',salaryRouter);
+
+/*---Admin----------------------*/
+app.use('edit_salary',editsalaryRouter);
+app.use('summary_info',summaryinfoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
