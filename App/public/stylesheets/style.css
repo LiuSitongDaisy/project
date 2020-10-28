@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.err {
+  color: red;
+}
+
+#new-category-btn {
+  width: 20%;
+  display: inline-block;
+}
