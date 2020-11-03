@@ -13,15 +13,6 @@ var requests_query = 'SELECT requests.pet_id, requests.s_date, requests.transfer
 
 /* Data */
 var userid;
-var petid;
-var petName;
-var category;
-var s_date;
-var e_date;
-var transfer_type;
-var payment_method;
-var existing_transactions;
-var care_takers;
 
 /* Err msg */
 
@@ -35,16 +26,9 @@ router.get('/:userid', function(req, res, next) {
 		} else {
 			pool.query(petowner_exist_query, [userid], (err, data) => {
 				if (data.rows.length > 0) {
-						pool.query(requests_query, [petid, getString(s_date)], (err, data) => {
-							if (data.rows.length > 0) {
-								var requests = data.rows[0];
-								e_date = requests.e_date;
-								transfer_type = requests.transfer_type;
-								payment_method = requests.payment_type;
-								} else {
-									res.render('not_found_error', {component: 'request'});
-								}
-							})
+						pool.query(requests_query, [userid], (err, data) => {
+							res.render('all_requests', {title: 'Requests', data: data.rows });
+						});
 				} else {
 					res.render('not_found_error', {component: 'userid'});
 				}
