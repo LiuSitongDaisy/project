@@ -6,7 +6,6 @@ const pool = new Pool({connectionString:process.env.DATABASE_URL})
 
 var all_caretaker_query = 'SELECT userid FROM CareTakers';
 var caretaker_exist_query = 'SELECT 1 FROM CareTakers WHERE userid=$1';
-var salary_policy;
 var salary;
 var userid;
 
