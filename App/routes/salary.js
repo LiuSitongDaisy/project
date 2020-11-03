@@ -35,9 +35,9 @@ router.get('/salary', function(req, res, next) {
 			isCareTaker = data.rows.length > 0;
 		});
 		if (isCareTaker) {
-			pool.query(salary_record, (err, data) => {
-				salary = data.rows;
-			});
+			pool.query(salary_record, [userid], function(err, data) {
+					salary = data.rows;
+				});
 			res.render('salary', {
 				title: 'View salary',
 				salary:salary,
