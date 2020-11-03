@@ -23,7 +23,8 @@ router.get('/:summary_info', function(req, res, next) {
 			connectionSuccess = true;
 			transaction = data.rows;
 		}
-		res.render('summary_info',{userid:req.session.user.userid})
+		res.render('summary_info',{userid:req.session.user.userid});
+	});
 	});
 
 

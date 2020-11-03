@@ -89,7 +89,7 @@ app.use('/new_pet', newPetRouter);
 app.use('salary',salaryRouter);
 
 /*---Admin----------------------*/
-app.use('edit_salary',editsalaryRouter);
+app.use('edit_salary',editsalarysettingsRouter);
 app.use('summary_info',summaryinfoRouter);
 
 // catch 404 and forward to error handler

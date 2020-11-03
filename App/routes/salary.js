@@ -8,7 +8,7 @@ const pool = new Pool({connectionString:process.env.DATABASE_URL})
 /* SQL Query */
 var all_caretaker_query = 'SELECT userid FROM CareTakers';
 var caretaker_exist_query = 'SELECT 1 FROM CareTakers WHERE userid=$1';
-var salary_record = 'SELECT salary FROM Salary'; // need to update manually?
+var salary_record = 'SELECT salary FROM Salary WHERE userid =$1'; // need to update manually?
 
 /* Data */
 var userid;
@@ -51,8 +51,6 @@ router.get('/salary', function(req, res, next) {
 		res.render('connection_error');
 	}
 });
-
-
 
 
 
