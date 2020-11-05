@@ -351,7 +351,6 @@ router.post('/:userid/:petid/:s_date/edit', function(req, res, next) {
 	readInput(req);
 	transfer_type = req.body.transfer;
 	payment_method = req.body.payment;
-	readInput(req);
 	pool.query(update_transfer_query, [transfer_type, petid, getString(s_date)], (err, data) => {
 		pool.query(update_payment_query, [payment_method, petid, getString(s_date)], (err, data) => {
 			console.log("Updated the transaction of " + petid + " on " + getString(s_date) + " with transfer type " + transfer_type + " and payment method " + payment_method);
