@@ -13,16 +13,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 	  <script>
+		  const toggleEditRequest = () => {
+			  document.getElementById("request-type-display").style.display = "none";
+			  document.getElementById("request-type-form").style.display = "block";
+			  document.getElementById("edit-request-btn").style.display = "none";
+			  document.getElementById("save-request-btn").style.display = "inline-flex";
+		  }
 	  </script>
   </head>
   <body>
     <h1><%= title%> of your <%=pet.category%> <%=pet.name%> from <%=s_date%> to <%=e_date%></h1>
 	<div id="header-btn">
 		<a href="../../../test"><button class="btn btn-secondary">Edit pet profile</button></a> <!-- TODO: Change to actual edit path -->
-		<a href="../../../test"><button class="btn btn-secondary">Edit request details</button></a> <!-- TODO: Change to actual edit request path -->
+		<button class="btn btn-secondary" type="button" onclick="toggleEditRequest()" id="edit-request-btn">Edit request details</button>
+		<button class="btn btn-secondary" type="submit" form="html_form" formaction="<%=s_date%>/edit_request" style="display: none" id="save-request-btn">Save request details</button>
 		<a href="../../../handle_transactions/<%=userid%>/<%=petid%>/<%=s_date%>"><button class="btn btn-secondary">Find care takers</button></a>
 		<a href="../../../test"><button class="btn btn-secondary">Back</button></a> <!-- TODO: Change to actual pet path -->
 	</div>
+	<form id="html_form" role="form" method="post"></form>
 	<br />
     <div id="request-info">
 		<p id="pet-info">
@@ -37,11 +45,28 @@
 			<span style="padding-left: 30px"></span>
 			<b>End date: </b><%=e_date%>
 		</p>
-		<p id="transaction-detail">
-			<b>Transfer type: </b><%=request.transfer_type%>
-			<span style="padding-left: 30px"></span>
-			<b>Payment method: </b><%=request.payment_type%>
-		</p>
+		<div id="request-type-detail">
+			<div id="request-type-display">
+				<p>
+					<b>Transfer type: </b><%=request.transfer_type%>
+					<span style="padding-left: 30px"></span>
+					<b>Payment method: </b><%=request.payment_type%>
+				</p>
+			</div>
+			<div id="request-type-form" style="display: none">
+				<label for="select-transfer-type">Transfer type: </label>
+				<select name="transfer" class="form-control" style="width: 30%; display: inline-flex" id="select-transfer-type" form="html_form">
+					<option value="deliver" <%=request.transfer_type === 'deliver' ? 'selected' : ''%>>deliver</option>
+					<option value="pick-up" <%=request.transfer_type === 'pick-up' ? 'selected' : ''%>>pick-up</option>
+					<option value="transfer at building" <%=request.transfer_type === 'transfer at building' ? 'selected' : ''%>>transfer at the PSC building</option>
+				</select>
+				<label for="select-payment-method">Paymen method: </label>
+				<select name="payment" class="form-control" style="width: 30%; display: inline-flex" id="select-payment-method" form="html_form">
+					<option value="card" <%=request.payment_type === 'card' ? 'selected' : ''%>>card</option>
+					<option value="cash" <%=request.payment_type === 'cash' ? 'selected' : ''%>>cash</option>
+				</select>
+			</div>
+		</div>
 	</div>
     <div id="existing-transactions-info">
 		<table class="table">
