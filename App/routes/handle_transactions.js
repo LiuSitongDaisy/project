@@ -104,6 +104,8 @@ var delete_request_query = 'DELETE FROM Requests WHERE pet_id=$1 AND s_date=$2';
 var delete_empty_request_qeury = 'CALL delete_empty_request($1, $2)';
 var withdraw_query = 'UPDATE Transactions SET status=\'Withdrawn\' WHERE pet_id=$1 AND s_date=$2 AND ct_id=$3';
 var individual_request_query = 'SELECT send_request_success($1, $2, $3)'; // $1=petid, $2=s_date, $3=ct_id
+var update_transfer_query = 'UPDATE Requests SET transfer_type=$1 WHERE pet_id=$2 AND s_date=$3';
+var update_payment_query = 'UPDATE Requests SET payment_type=$1 WHERE pet_id=$2 AND s_date=$3';
 
 /* Data */
 var userid;
@@ -349,8 +351,13 @@ router.post('/:userid/:petid/:s_date/edit', function(req, res, next) {
 	readInput(req);
 	transfer_type = req.body.transfer;
 	payment_method = req.body.payment;
-	console.log(transfer_type);
-	console.log(payment_method);
+	readInput(req);
+	pool.query(update_transfer_query, [transfer_type, petid, getString(s_date)], (err, data) => {
+		pool.query(update_payment_query, [payment_method, petid, getString(s_date)], (err, data) => {
+			console.log("Updated the transaction of " + petid + " on " + getString(s_date) + " with transfer type " + transfer_type + " and payment method " + payment_method);
+			redirectHere(res);
+		})
+	})
 });
 
 module.exports = router;
