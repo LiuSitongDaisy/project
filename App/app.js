@@ -4,11 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-/* --- V7: Using dotenv     --- */
-require('dotenv').config({path: __dirname + '/../.env'});
-
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 /* --- V2: Adding Web Pages --- */
 var aboutRouter = require('./routes/about');
@@ -21,19 +17,17 @@ var loopsRouter = require('./routes/loops');
 
 /* --- V4: Database Connect --- */
 var selectRouter = require('./routes/select');
-var testRouter = require('./routes/test');
-/* ---------------------------- */
-
-/* --- V5: Adding Forms     --- */
-var formsRouter = require('./routes/forms');
-/* ---------------------------- */
-
-/* --- V6: Modify Database  --- */
-var insertRouter = require('./routes/insert');
 /* ---------------------------- */
 
 /* --- Pet Owner -------------- */
 var newPetRouter = require('./routes/new_pet');
+var newRequestRouter = require('./routes/new_request');
+var newTransactionRouter = require('./routes/handle_transactions');
+var requestRouter = require('./routes/request');
+
+/* --- Log in, Register, Edit profile, User profiles */
+var usersRouter = require('./routes/users');
+
 
 var app = express();
 
@@ -48,7 +42,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 /* --- V2: Adding Web Pages --- */
 app.use('/about', aboutRouter);
@@ -61,22 +54,22 @@ app.use('/loops', loopsRouter);
 
 /* --- V4: Database Connect --- */
 app.use('/select', selectRouter);
-app.use('/test', testRouter);
-/* ---------------------------- */
-
-/* --- V5: Adding Forms     --- */
-app.use('/forms', formsRouter);
-/* ---------------------------- */
-
-/* --- V6: Modify Database  --- */
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/insert', insertRouter);
 /* ---------------------------- */
 
 /* --- Pet Owner -------------- */
 app.use('/new_pet', newPetRouter);
+app.use('/new_request', newRequestRouter);
+app.use('/handle_transactions', newTransactionRouter);
+app.use('/request', requestRouter);
+
+/* --- Log in, Register, Edit profiles, and User profiles */
+app.use('/login', usersRouter);
+app.use('/register', usersRouter);
+app.use('/edit_profile', usersRouter);
+app.use('/dashboarda', usersRouter);
+app.use('/dashboardc', usersRouter);
+app.use('/dashboardp', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

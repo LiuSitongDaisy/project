@@ -45,7 +45,7 @@ body {
     margin-left: -200px;
     margin-top: -200px;
  
-    background-image: url(../../images/loginbg.png);
+    background-image: url(../images/loginbg.png);
  
     border-radius: 10px;
     text-align: center;
@@ -110,7 +110,6 @@ input {
 #btn_login:hover{
     background-color: sandybrown;
 }
- 
  
 .bottom img {
     height: 230px;
