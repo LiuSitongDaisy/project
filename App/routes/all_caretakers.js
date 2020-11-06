@@ -17,11 +17,11 @@ var renderPage = (res) => {
 
 /* SQL Query */
 var all_ct_query = 'SELECT CT.userid AS userid, U.name AS name, U.gender AS gender, CT.rating AS rating,\n' +
-	'  CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN \'Full time\' ELSE \'Part time\' END\n' +
+	'  CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN \'Full time\' ELSE \'Part time\' END AS category\n' +
 	'FROM CareTakers CT NATURAL JOIN Users U';
 /*
 SELECT CT.userid AS userid, U.name AS name, U.gender AS gender, CT.rating AS rating,
-  CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN 'Full time' ELSE 'Part time' END
+  CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN 'Full time' ELSE 'Part time' END AS category
 FROM CareTakers CT NATURAL JOIN Users U
  */
 

@@ -36,5 +36,34 @@
 	<form id="html_form" role="form" method="post">
 
 	</form>
+    <div id="all-ct-table">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="colgroup" colspan="6">All registered care takers according to the filter</th>
+				</tr>
+				<tr>
+					<th scope="col">Care Taker ID</th>
+					<th scope="col">Name</th>
+					<th scope="col">Gender</th>
+					<th scope="col">Type</th>
+					<th scope="col">Rating</th>
+					<th scope="col"><!-- View profile --></th>
+				</tr>
+			</thead>
+			<tbody>
+			<% for (var i=0; i<caretakers.length; i++) { %>
+				<tr>
+					<td><%= caretakers[i].userid%></td>
+					<td><%= caretakers[i].name%></td>
+					<td><%= caretakers[i].gender%></td>
+					<td><%= caretakers[i].category%></td>
+					<td><%= Math.round(caretakers[i].rating * 10) / 10%></td>
+					<td><button type="button" class="btn btn-secondary">View profile</button></td>
+				</tr>
+			<% } %>
+			</tbody>
+		</table>
+	</div>
   </body>
 </html>
