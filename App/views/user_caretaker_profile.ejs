@@ -16,7 +16,6 @@
   </head>
   <body>
   	<h1><%=title%> of <%=ct.userid%></h1>
-	<p><%=userid%></p>
 	<a href="../../all_caretakers"><button type="button" class="btn btn-secondary">Back</button></a>
 	<div id="info">
 		<p><b>User ID: </b><%=ct.userid%></p>
@@ -24,13 +23,16 @@
 		<p><b>Gender: </b><%=ct.gender%></p>
 		<p><b>Address: </b><%=ct.address%></p>
 		<p><b>Type of contract: </b><%=ct.type%></p>
-		<p><b>Average rating: </b><%=ct.rating%></p>
+		<p><b>Average rating: </b><%=Math.round(ct.rating * 10) / 10%></p>
 		<p>
 			<b>Good at taking care of: </b>
 			<% for (var i=0; i<pcs.length; i++) { %>
 				<span><%=pcs[i].category%></span>
 			<% } %>
 		</p>
+	</div>
+  	<div id="transactions">
+
 	</div>
   </body>
 </html>

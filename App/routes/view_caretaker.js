@@ -8,6 +8,15 @@ const pool = new Pool({connectionString:process.env.DATABASE_URL})
 /* Util */
 var getString = (date) => date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
+var renderUserPage = (res) => {
+	res.render('user_caretaker_profile', {
+		title: 'View care taker profile',
+		ct: ct,
+		pcs: pcs,
+		userid: userid
+	})
+}
+
 /* SQL Query */
 var ct_info_query = 'SELECT U.userid AS userid, U.name AS name, U.gender AS gender, U.address AS address,\n' +
 	'  CASE WHEN U.userid IN (SELECT userid FROM FullTimeCareTakers) THEN \'Full time\' ELSE \'Part time\' END AS type,\n' +
@@ -55,12 +64,33 @@ HAVING COUNT(*) >= 10
 ORDER BY AVG(T.rate) DESC
 LIMIT 3
  */
+var user_type_query = 'SELECT CASE\n' +
+	'WHEN $1 IN (SELECT userid FROM PSCAdministrators) THEN \'admin\'\n' +
+	'WHEN $1 NOT IN (SELECT userid FROM Users) THEN \'none\'\n' +
+	'WHEN $1 NOT IN (SELECT userid FROM CareTakers) THEN \'owner\'\n' +
+	'WHEN $1 NOT IN (SELECT userid FROM PetOwners) THEN \'taker\'\n' +
+	'ELSE \'both\'\n' +
+	'END AS value';
+/*
+SELECT CASE
+WHEN $1 IN (SELECT userid FROM PSCAdministrators) THEN 'admin'
+WHEN $1 NOT IN (SELECT userid FROM Users) THEN 'none'
+WHEN $1 NOT IN (SELECT userid FROM CareTakers) THEN 'owner'
+WHEN $1 NOT IN (SELECT userid FROM PetOwners) THEN 'taker'
+ELSE 'both'
+END AS value
+ */
+var all_transaction_query = '';
+/*
+SELECT
+ */
 
 /* Data */
 var ct_id;
 var ct;
 var pcs;
 var userid;
+var transactions;
 
 /* Err msg */
 
@@ -84,16 +114,24 @@ router.get('/:ct_id/:userid', function(req, res, next) {
 	ct_id = req.params.ct_id;
 	userid = req.params.userid; // TODO: Use session ID
 	pool.query(ct_info_query, [ct_id], (err, data) => {
-		ct = data.rows[0];
-		pool.query(good_pc_query, [ct_id], (err, data) => {
-			pcs = data.rows;
-			res.render('user_caretaker_profile', {
-				title: 'View care taker profile',
-				ct: ct,
-				pcs: pcs,
-				userid: userid
+		if (data.rows.length > 0) {
+			ct = data.rows[0];
+			pool.query(good_pc_query, [ct_id], (err, data) => {
+				pcs = data.rows;
+				pool.query(user_type_query, [userid], (err, data) => {
+					var user_type = data.rows[0].value;
+					if (user_type === 'none') {
+						res.render('not_found_error', {component: 'user ID'});
+					} else if (ct_id === userid) {
+						// TODO: redirect to personal profile page
+					} else if (user_type === 'both' || user_type === 'taker' || user_type === 'admin') {
+						renderUserPage(res);
+					}
+				})
 			})
-		})
+		} else {
+			res.render('not_found_error', {component: 'care taker ID'});
+		}
 	})
 })
 

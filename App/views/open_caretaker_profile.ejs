@@ -23,7 +23,7 @@
 		<p><b>Gender: </b><%=ct.gender%></p>
 		<p><b>Address: </b><%=ct.address%></p>
 		<p><b>Type of contract: </b><%=ct.type%></p>
-		<p><b>Average rating: </b><%=ct.rating%></p>
+		<p><b>Average rating: </b><%=Math.round(ct.rating * 10) / 10%></p>
 		<p>
 			<b>Good at taking care of: </b>
 			<% for (var i=0; i<pcs.length; i++) { %>
