@@ -79,34 +79,4 @@ router.get('/:userid', function(req, res, next) {
 	})
 });
 
-// POST
-router.post('/:userid/:petid/:s_date/review', function(req, res, next) {
-	userid = req.params.userid; //TODO: Need to replace with user session id
-	petid = req.params.petid;
-	s_date = new Date(req.params.s_date);
-	var rate = req.body.rate;
-	var review = req.body.review;
-	pool.query(save_rate_query, [rate, petid, getString(s_date)], (err, data) => {
-		console.log("Update rate to " + rate);
-		pool.query(save_review_query, [review, petid, getString(s_date)], (err, data) => {
-			console.log("Update review");
-			res.redirect("/request/" + userid + "/" + petid + "/" + getString(s_date));
-		})
-	});
-});
-
-router.post('/:userid/:petid/:s_date/edit_request', function(req, res, next) {
-	userid = req.params.userid; //TODO: Need to replace with user session id
-	petid = req.params.petid;
-	s_date = new Date(req.params.s_date);
-	var transfer_type = req.body.transfer;
-	var payment_method = req.body.payment;
-	pool.query(update_transfer_query, [transfer_type, petid, getString(s_date)], (err, data) => {
-		pool.query(update_payment_query, [payment_method, petid, getString(s_date)], (err, data) => {
-			console.log("Updated the transaction of " + petid + " on " + getString(s_date) + " with transfer type " + transfer_type + " and payment method " + payment_method);
-			res.redirect("/request/" + userid + "/" + petid + "/" + getString(s_date));
-		})
-	})
-});
-
 module.exports = router;

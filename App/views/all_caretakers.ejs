@@ -73,7 +73,7 @@
 					<td><%= caretakers[i].gender%></td>
 					<td><%= caretakers[i].category%></td>
 					<td><%= caretakers[i].rating ? Math.round(caretakers[i].rating * 10) / 10 : ''%></td>
-					<td><a href="../view_caretaker/<%=caretakers[i].userid%>" target="_blank"><button type="button" class="btn btn-secondary">View profile</button></a></td> <!-- TODO: Link to profile page -->
+					<td><a href="../view_caretaker/<%=caretakers[i].userid%>" target="_blank"><button type="button" class="btn btn-secondary">View profile</button></a></td>
 				</tr>
 			<% } %>
 			</tbody>
