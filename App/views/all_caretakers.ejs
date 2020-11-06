@@ -34,8 +34,22 @@
   <body>
     <h1><%= title%></h1>
 	<form id="html_form" role="form" method="post">
-
+		<label for="type-select">Type of Care Taker: </label>
+		<select class="form-control" id="type-select" name="type">
+			<option value="">All</option>
+			<option value="full-time">Full time only</option>
+		</select>
+		<label for="pet-category-select">Care Takers for Pet Category: </label>
+		<select class="form-control" id="pet-category-select" name="category">
+			<option value="all">all</option>
+			<% for (var i=0; i<categories.length; i++) { %>
+				<option value="<%=categories[i].name%>"><%=categories[i].name%></option>
+			<% } %>
+		</select>
+		<br />
+		<button type="submit" class="btn btn-primary" formaction="/all_caretakers">Filter</button>
 	</form>
+	<br />
     <div id="all-ct-table">
 		<table class="table">
 			<thead>
@@ -58,8 +72,8 @@
 					<td><%= caretakers[i].name%></td>
 					<td><%= caretakers[i].gender%></td>
 					<td><%= caretakers[i].category%></td>
-					<td><%= Math.round(caretakers[i].rating * 10) / 10%></td>
-					<td><button type="button" class="btn btn-secondary">View profile</button></td>
+					<td><%= caretakers[i].rating ? Math.round(caretakers[i].rating * 10) / 10 : ''%></td>
+					<td><button type="button" class="btn btn-secondary">View profile</button></td> <!-- TODO: Link to profile page -->
 				</tr>
 			<% } %>
 			</tbody>

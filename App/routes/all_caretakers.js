@@ -11,61 +11,52 @@ var getString = (date) => date.getFullYear() + "-" + (date.getMonth() + 1) + "-"
 var renderPage = (res) => {
 	res.render('all_caretakers', {
 		title: 'All registered care takers',
-		caretakers: caretakers
+		caretakers: caretakers,
+		categories: categories
 	})
 }
 
 /* SQL Query */
 var all_ct_query = 'SELECT CT.userid AS userid, U.name AS name, U.gender AS gender, CT.rating AS rating,\n' +
 	'  CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN \'Full time\' ELSE \'Part time\' END AS category\n' +
-	'FROM CareTakers CT NATURAL JOIN Users U';
+	'FROM CareTakers CT NATURAL JOIN Users U\n' +
+	'WHERE ($1=\'\' OR CT.userid IN (SELECT userid FROM FullTimeCareTakers))\n' +
+	'AND ($2=\'all\' OR $2 IN (SELECT category FROM CanTakeCare WHERE ct_id=CT.userid))\n' +
+	'ORDER BY COALESCE(rating, 0) DESC, category';
 /*
 SELECT CT.userid AS userid, U.name AS name, U.gender AS gender, CT.rating AS rating,
   CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN 'Full time' ELSE 'Part time' END AS category
 FROM CareTakers CT NATURAL JOIN Users U
+WHERE ($1='' OR CT.userid IN (SELECT userid FROM FullTimeCareTakers))
+AND ($2='all' OR $2 IN (SELECT category FROM CanTakeCare WHERE ct_id=CT.userid))
+ORDER BY COALESCE(rating, 0) DESC, category
  */
+var all_pc_query = 'SELECT * FROM PetCategories';
 
 /* Data */
 var caretakers;
+var categories;
+var type = '';
+var category = 'all';
 
 /* Err msg */
 
 // GET
 router.get('/', function(req, res, next) {
-	pool.query(all_ct_query, (err, data) => {
+	pool.query(all_ct_query, [type, category], (err, data) => {
 		caretakers = data.rows;
-		renderPage(res);
+		pool.query(all_pc_query, (err, data) => {
+			categories = data.rows;
+			renderPage(res);
+		})
 	})
 });
 
 // POST
-router.post('/:userid/:petid/:s_date/review', function(req, res, next) {
-	userid = req.params.userid; //TODO: Need to replace with user session id
-	petid = req.params.petid;
-	s_date = new Date(req.params.s_date);
-	var rate = req.body.rate;
-	var review = req.body.review;
-	pool.query(save_rate_query, [rate, petid, getString(s_date)], (err, data) => {
-		console.log("Update rate to " + rate);
-		pool.query(save_review_query, [review, petid, getString(s_date)], (err, data) => {
-			console.log("Update review");
-			res.redirect("/request/" + userid + "/" + petid + "/" + getString(s_date));
-		})
-	});
-});
-
-router.post('/:userid/:petid/:s_date/edit_request', function(req, res, next) {
-	userid = req.params.userid; //TODO: Need to replace with user session id
-	petid = req.params.petid;
-	s_date = new Date(req.params.s_date);
-	var transfer_type = req.body.transfer;
-	var payment_method = req.body.payment;
-	pool.query(update_transfer_query, [transfer_type, petid, getString(s_date)], (err, data) => {
-		pool.query(update_payment_query, [payment_method, petid, getString(s_date)], (err, data) => {
-			console.log("Updated the transaction of " + petid + " on " + getString(s_date) + " with transfer type " + transfer_type + " and payment method " + payment_method);
-			res.redirect("/request/" + userid + "/" + petid + "/" + getString(s_date));
-		})
-	})
+router.post('/', function(req, res, next) {
+	type = req.body.type;
+	category = req.body.category;
+	res.redirect('/all_caretakers');
 });
 
 module.exports = router;
