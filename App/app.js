@@ -34,6 +34,7 @@ var insertRouter = require('./routes/insert');
 
 /* --- Open access ------------ */
 var allCaretakersRouter = require('./routes/all_caretakers')
+var viewCaretakerRouter = require('./routes/view_caretaker')
 
 /* --- Pet Owner -------------- */
 var newPetRouter = require('./routes/new_pet');
@@ -83,6 +84,7 @@ app.use('/insert', insertRouter);
 
 /* --- Open access ------------ */
 app.use('/all_caretakers', allCaretakersRouter);
+app.use('/view_caretaker', viewCaretakerRouter);
 
 /* --- Pet Owner -------------- */
 app.use('/new_pet', newPetRouter);
