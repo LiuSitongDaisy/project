@@ -32,7 +32,34 @@
 		</p>
 	</div>
   	<div id="transactions">
-
+		<table class="table">
+			<thead>
+				<tr><th scope="colgroup" colspan="7"><%=table===1 ? 'All transactions involved' : 'All transactions with me' %></th></tr>
+				<tr>
+					<th scope="col">Pet ID</th>
+					<th scope="col">Start date</th>
+					<th scope="col">End date</th>
+					<th scope="col">Rate</th>
+					<th scope="col">Review</th>
+					<th scope="col">Pet Category</th>
+					<th scope="col"><%=table===1 ? 'Pet Owner' : 'Status' %></th>
+				</tr>
+			</thead>
+			<%var getString = (date) => date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(); %>
+			<tbody>
+			<% for (var i=0; i<transactions.length; i++) { %>
+				<tr>
+					<td><%=transactions[i].petid%></td>
+					<td><%=getString(transactions[i].s_date)%></td>
+					<td><%=getString(transactions[i].e_date)%></td>
+					<td><%=transactions[i].rate%></td>
+					<td><%=transactions[i].review%></td>
+					<td><%=transactions[i].category%></td>
+					<td><%=table===1 ? transactions[i].owner : transactions[i].status %></td>
+				</tr>
+			<% } %>
+			</tbody>
+		</table>
 	</div>
   </body>
 </html>

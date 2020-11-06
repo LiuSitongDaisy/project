@@ -6,14 +6,15 @@ const { Pool } = require('pg')
 const pool = new Pool({connectionString:process.env.DATABASE_URL})
 
 /* Util */
-var getString = (date) => date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
 var renderUserPage = (res) => {
 	res.render('user_caretaker_profile', {
 		title: 'View care taker profile',
 		ct: ct,
 		pcs: pcs,
-		userid: userid
+		userid: userid,
+		transactions: transactions,
+		table: table
 	})
 }
 
@@ -80,9 +81,25 @@ WHEN $1 NOT IN (SELECT userid FROM PetOwners) THEN 'taker'
 ELSE 'both'
 END AS value
  */
-var all_transaction_query = '';
+var all_transaction_query = 'SELECT T.pet_id AS petid, R.s_date AS s_date , R.e_date AS e_date, T.cost AS cost, T.rate AS rate, T.review AS review, P.category AS category, P.owner AS owner\n' +
+	'FROM (Transactions T NATURAL JOIN Requests R) INNER JOIN Pets P ON T.pet_id=P.petid\n' +
+	'WHERE T.ct_id=$1 AND T.status=\'Confirmed\'\n' +
+	'ORDER BY s_date DESC';
 /*
-SELECT
+SELECT T.pet_id AS petid, R.s_date AS s_date , R.e_date AS e_date, T.cost AS cost, T.rate AS rate, T.review AS review, P.category AS category, P.owner AS owner
+FROM (Transactions T NATURAL JOIN Requests R) INNER JOIN Pets P ON T.pet_id=P.petid
+WHERE T.ct_id=$1 AND T.status='Confirmed'
+ORDER BY s_date DESC
+ */
+var all_my_transaction_query = 'SELECT T.pet_id AS petid, R.s_date AS s_date , R.e_date AS e_date, T.cost AS cost, T.rate AS rate, T.review AS review, P.category AS category, T.status AS status\n' +
+	'FROM (Transactions T NATURAL JOIN Requests R) INNER JOIN Pets P ON T.pet_id=P.petid\n' +
+	'WHERE T.ct_id=$1 AND P.owner=$2\n' +
+	'ORDER BY s_date DESC';
+/*
+SELECT T.pet_id AS petid, R.s_date AS s_date , R.e_date AS e_date, T.cost AS cost, T.rate AS rate, T.review AS review, P.category AS category, T.status AS status
+FROM (Transactions T NATURAL JOIN Requests R) INNER JOIN Pets P ON T.pet_id=P.petid
+WHERE T.ct_id=$1 AND P.owner=$2
+ORDER BY s_date DESC
  */
 
 /* Data */
@@ -91,6 +108,7 @@ var ct;
 var pcs;
 var userid;
 var transactions;
+var table;
 
 /* Err msg */
 
@@ -125,7 +143,17 @@ router.get('/:ct_id/:userid', function(req, res, next) {
 					} else if (ct_id === userid) {
 						// TODO: redirect to personal profile page
 					} else if (user_type === 'both' || user_type === 'taker' || user_type === 'admin') {
-						renderUserPage(res);
+						pool.query(all_transaction_query, [ct_id], (err, data) => {
+							transactions = data.rows;
+							table = 1;
+							renderUserPage(res);
+						})
+					} else {
+						pool.query(all_my_transaction_query, [ct_id, userid], (err, data) => {
+							transactions = data.rows;
+							table = 2;
+							renderUserPage(res);
+						})
 					}
 				})
 			})
