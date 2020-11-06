@@ -60,12 +60,13 @@ LIMIT 3
 var ct_id;
 var ct;
 var pcs;
+var userid;
 
 /* Err msg */
 
 // GET
-router.get('/:userid', function(req, res, next) {
-	ct_id = req.params.userid;
+router.get('/:ct_id', function(req, res, next) {
+	ct_id = req.params.ct_id;
 	pool.query(ct_info_query, [ct_id], (err, data) => {
 		ct = data.rows[0];
 		pool.query(good_pc_query, [ct_id], (err, data) => {
@@ -78,5 +79,22 @@ router.get('/:userid', function(req, res, next) {
 		})
 	})
 });
+
+router.get('/:ct_id/:userid', function(req, res, next) {
+	ct_id = req.params.ct_id;
+	userid = req.params.userid; // TODO: Use session ID
+	pool.query(ct_info_query, [ct_id], (err, data) => {
+		ct = data.rows[0];
+		pool.query(good_pc_query, [ct_id], (err, data) => {
+			pcs = data.rows;
+			res.render('user_caretaker_profile', {
+				title: 'View care taker profile',
+				ct: ct,
+				pcs: pcs,
+				userid: userid
+			})
+		})
+	})
+})
 
 module.exports = router;
