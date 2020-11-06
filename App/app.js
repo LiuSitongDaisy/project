@@ -1,14 +1,14 @@
+const express = require('express');
+const router = express.Router();
+const app = express();
+const expressEjsLayout = require('express-ejs-layouts');
+
 var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-
-/* --- V2: Adding Web Pages --- */
-var aboutRouter = require('./routes/about');
-/* ---------------------------- */
 
 /* --- V3: Basic Template   --- */
 var tableRouter = require('./routes/table');
@@ -28,12 +28,13 @@ var requestRouter = require('./routes/request');
 /* --- Log in, Register, Edit profile, User profiles */
 var usersRouter = require('./routes/users');
 
-
-var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(expressEjsLayout);
+
+// BodyParser
+app.use(express.urlencoded({extended: false}));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -41,11 +42,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/* --- Routes --- */
 app.use('/', indexRouter);
 
-/* --- V2: Adding Web Pages --- */
-app.use('/about', aboutRouter);
-/* ---------------------------- */
 
 /* --- V3: Basic Template   --- */
 app.use('/table', tableRouter);

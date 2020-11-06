@@ -83,6 +83,12 @@ body {
     font-size: 1.2em;
 }
 
+.middlenav .takers {
+    height: 20px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
 .middlenav a {
     color: seashell;
 }
