@@ -8,77 +8,34 @@ const pool = new Pool({connectionString:process.env.DATABASE_URL})
 /* Util */
 var getString = (date) => date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
-var renderTransaction = (res) => {
-	res.render('transaction', {
-		title: 'Transaction',
-		petid: petid,
-		s_date: getString(s_date),
-		e_date: getString(transaction.e_date),
-		transaction: transaction
-	})
-}
-
-var renderRequest = (res) => {
-	res.render('request', {
-		title: 'Request',
-		userid: userid,
-		petid: petid,
-		s_date: getString(s_date),
-		e_date: getString(request.e_date),
-		pet: pet,
-		request: request,
+var renderPage = (res) => {
+	res.render('all_caretakers', {
+		title: 'All registered care takers',
 		caretakers: caretakers
 	})
 }
 
 /* SQL Query */
+var all_ct_query = 'SELECT CT.userid AS userid, U.name AS name, U.gender AS gender, CT.rating AS rating,\n' +
+	'  CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN \'Full time\' ELSE \'Part time\' END\n' +
+	'FROM CareTakers CT NATURAL JOIN Users U';
+/*
+SELECT CT.userid AS userid, U.name AS name, U.gender AS gender, CT.rating AS rating,
+  CASE WHEN CT.userid IN (SELECT userid FROM FullTimeCareTakers) THEN 'Full time' ELSE 'Part time' END
+FROM CareTakers CT NATURAL JOIN Users U
+ */
 
 /* Data */
-
+var caretakers;
 
 /* Err msg */
 
 // GET
-router.get('/:userid/:petid/:s_date', function(req, res, next) {
-	userid = req.params.userid; //TODO: Need to replace with user session id
-	pool.query(petowner_exist_query, [userid], (err, data) => {
-		if (err !== undefined) {
-			res.render('connection_error');
-		} else {
-			if (data.rows.length > 0) {
-				petid = req.params.petid;
-				s_date = new Date(req.params.s_date);
-				pool.query(pet_exist_query, [petid, userid], (err, data) => {
-					if (data.rows.length > 0) {
-						pet = data.rows[0];
-						pool.query(request_exist_query, [petid, getString(s_date)], (err, data) => {
-							if (data.rows.length > 0) {
-								request = data.rows[0];
-								pool.query(confirmed_transaction_exist_query, [petid, getString(s_date)], (err, data) => {
-									if (data.rows.length > 0) {
-										transaction = data.rows[0];
-										renderTransaction(res);
-									} else {
-										transaction = null;
-										pool.query(all_ct_query, [petid, getString(s_date)], (err, data) => {
-											caretakers = data.rows;
-											renderRequest(res);
-										});
-									}
-								})
-							} else {
-								res.render('not_found_error', {component: 'request'});
-							}
-						})
-					} else {
-						res.render('not_found_error', {component: 'pet id'});
-					}
-				})
-			} else {
-				res.render('not_found_error', {component: 'pet owner userid'});
-			}
-		}
-	});
+router.get('/', function(req, res, next) {
+	pool.query(all_ct_query, (err, data) => {
+		caretakers = data.rows;
+		renderPage(res);
+	})
 });
 
 // POST
