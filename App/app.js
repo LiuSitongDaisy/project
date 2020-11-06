@@ -32,6 +32,9 @@ var formsRouter = require('./routes/forms');
 var insertRouter = require('./routes/insert');
 /* ---------------------------- */
 
+/* --- Open access ------------ */
+var allCaretakersRouter = require('./routes/all_caretakers')
+
 /* --- Pet Owner -------------- */
 var newPetRouter = require('./routes/new_pet');
 var newRequestRouter = require('./routes/new_request');
@@ -77,6 +80,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/insert', insertRouter);
 /* ---------------------------- */
+
+/* --- Open access ------------ */
+app.use('/all_caretakers', allCaretakersRouter);
 
 /* --- Pet Owner -------------- */
 app.use('/new_pet', newPetRouter);
