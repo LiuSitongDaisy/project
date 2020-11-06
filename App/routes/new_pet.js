@@ -115,7 +115,7 @@ router.post('/:userid', function(req, res, next) {
 		var len = str.length;
 		for (var i=0; i<len && isValid; i++) {
 			var c = str.charAt(i);
-			if (!((c < 'z' && c > 'a') || (c = ' '))) {
+			if (!((c < 'z' && c > 'a') || (c === ' ') || (c === '-') || (c === ','))) {
 				isValid = false;
 				categoryErr = "* The pet category should consist of letters and white space only.";
 			}
