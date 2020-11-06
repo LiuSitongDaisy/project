@@ -21,35 +21,39 @@ SELECT U.userid AS userid, U.name AS name, U.gender AS gender, U.address AS addr
 FROM Users U NATURAL JOIN CareTakers CT
 WHERE userid=$1
  */
-var good_pc_query = 'SELECT P.category AS category\n' +
+var good_pc_query = 'SELECT P.category\n' +
 	'FROM (Pets P NATURAL JOIN CanTakeCare CTC) INNER JOIN\n' +
-	'    (SELECT (T1.rate - avg) / stddev AS rate, T1.pet_id AS pet_id, T1.ct_id AS ct_id\n' +
+	'    (SELECT CASE WHEN stddev = 0 THEN 0 ELSE (T1.rate - avg) / stddev END AS rate,\n' +
+	'            T1.pet_id AS pet_id, T1.ct_id AS ct_id\n' +
 	'    FROM (Transactions T1 INNER JOIN Pets P1 ON T1.pet_id=P1.petid) INNER JOIN (\n' +
-	'        SELECT AVG(T2.rate) AS avg, STDDEV(T2.rate) AS stddev, P2.category AS category\n' +
+	'        SELECT AVG(T2.rate) AS avg, STDDEV(T2.rate) AS stddev, P2.owner AS owner\n' +
 	'        FROM Transactions T2 INNER JOIN Pets P2 ON T2.pet_id=P2.petid\n' +
-	'        GROUP BY P2.category\n' +
-	'        ) PT ON P1.category=PT.category\n' +
+	'        GROUP BY P2.owner\n' +
+	'        ) PT ON P1.owner=PT.owner\n' +
 	'    WHERE T1.status=\'Confirmed\') T\n' +
 	'    ON P.petid=T.pet_id AND CTC.ct_id=T.ct_id\n' +
 	'WHERE CTC.ct_id=$1\n' +
 	'GROUP BY P.category\n' +
 	'HAVING COUNT(*) >= 10\n' +
-	'ORDER BY AVG(T.rate) DESC LIMIT 5';
+	'ORDER BY AVG(T.rate) DESC\n' +
+	'LIMIT 3';
 /*
-SELECT P.category AS category
+SELECT P.category
 FROM (Pets P NATURAL JOIN CanTakeCare CTC) INNER JOIN
-    (SELECT (T1.rate - avg) / stddev AS rate, T1.pet_id AS pet_id, T1.ct_id AS ct_id
+    (SELECT CASE WHEN stddev = 0 THEN 0 ELSE (T1.rate - avg) / stddev END AS rate,
+            T1.pet_id AS pet_id, T1.ct_id AS ct_id
     FROM (Transactions T1 INNER JOIN Pets P1 ON T1.pet_id=P1.petid) INNER JOIN (
-        SELECT AVG(T2.rate) AS avg, STDDEV(T2.rate) AS stddev, P2.category AS category
+        SELECT AVG(T2.rate) AS avg, STDDEV(T2.rate) AS stddev, P2.owner AS owner
         FROM Transactions T2 INNER JOIN Pets P2 ON T2.pet_id=P2.petid
-        GROUP BY P2.category
-        ) PT ON P1.category=PT.category
+        GROUP BY P2.owner
+        ) PT ON P1.owner=PT.owner
     WHERE T1.status='Confirmed') T
     ON P.petid=T.pet_id AND CTC.ct_id=T.ct_id
 WHERE CTC.ct_id='lphittiplace4'
 GROUP BY P.category
 HAVING COUNT(*) >= 10
 ORDER BY AVG(T.rate) DESC
+LIMIT 3
  */
 
 /* Data */
