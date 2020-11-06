@@ -13,7 +13,7 @@ var all_transaction = 'SELECT * FROM Transactions';
 var userid;
 var isAdmin;
 
-route.get("/salary",(req,res)=>{   
+router.get("/summary_info",(req,res)=>{
       
     userid=req.params.userid; 
 

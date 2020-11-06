@@ -9,12 +9,13 @@ var admin_exist_query = 'SELECT 1 FROM PSCAdministrators WHERE userid=$1';
 
 var insert_query = 'INSERT INTO Salary VALUES'
 
-var userid=req.params.userid; 
+ var userid;
 
 router.post('/edit_salary_settings', function (req, res, next) {
   var caretakerid = req.body.caretakerid;
   var salary_policy = req.body.salary_policy;
   var salary = req.body.salary;
+  userid = req.params.userid;
 
   pool.query(admin_exist_query, [userid], (err, data) => {
 		isAdmin = data.rows.length > 0;
