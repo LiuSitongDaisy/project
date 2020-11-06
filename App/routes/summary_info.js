@@ -7,7 +7,7 @@ const pool = new Pool({connectionString:process.env.DATABASE_URL})
 
 /* SQL Query */
 var admin_exist_query = 'SELECT 1 FROM PSCAdministrators WHERE userid=$1';
-var all_transaction = 'SELECT * FROM Transactions';
+var all_salary = 'SELECT * FROM Salary';
 
 /* Data */
 var userid;
@@ -21,7 +21,7 @@ router.get("/summary_info",(req,res)=>{
 		isAdmin = data.rows.length > 0;
 	});
 
-    pool.query(all_transaction, function (error, results, fields) {
+    pool.query(all_salary, function (error, results, fields) {
         
         if (error) throw error;       
             

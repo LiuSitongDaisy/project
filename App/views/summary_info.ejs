@@ -11,38 +11,23 @@
 <table border="1" cellpadding="15" >
     <tr>
         
-        <th>Pet_id</th>
-        <th>date</th>
-        <th>CareTaker_id</th>
-        <th>cost</th>
-        <th>rate</th>
-        <th>review</th>
-        <th>status</th>
+        <th>Userid</th>
+        <th>salary</th>
+        <th>month</th>
+
     </tr>
     <%
         for(let i=0;i<res.length;i++){
     %>
     <tr>
         <td>
-            <%=res[i].pet_id%>
+            <%=res[i].userid%>
         </td>
         <td>
-            <%=res[i].s_date%>
+            <%=res[i].salary%>
         </td>
         <td>
-            <%=res[i].ct_id%>
-        </td>
-        <td>
-            <%=res[i].cost%>
-        </td>
-        <td>
-            <%=res[i].rate%>
-        </td>
-        <td>
-            <%=res[i].review%>
-        </td>
-        <td>
-            <%=res[i].status%>
+            <%=res[i].month%>
         </td>
         
         
