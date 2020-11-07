@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const initialize = require('./passport-config');
 require('dotenv').config({path: __dirname + '/../.env'});
-
+const expressEjsLayout = require('express-ejs-layouts');
 const { Pool } = require('pg');
 const { query } = require('express');
 const pool = new Pool({connectionString:process.env.DATABASE_URL})
@@ -74,16 +74,16 @@ router.get('/register',(req,res)=>{
     res.render('register')
     })
 router.post('/register',(req,res)=>{
-  const gender;
+  var gender;
   var temp = document.getElementsByClassName("gender");
   if(temp[0].checked) gender = MALE;
   if(temp[1].checked) gender = FEMALE;
-  const identity;
+  var identity;
   temp = document.getElementById("select");
   var index = temp.selectedIndex;
   identity = temp.options[index].value;
 
-  const {userid, name, email, password, address, identity} = req.body;
+  const {userid, name, email, password, address} = req.body;
   let errors = [];
   console.log(' Name ' + userid+ ' email :' + email+ ' pass:' + password);
   if(!userid || !email || !password) {
@@ -107,13 +107,13 @@ router.post('/register',(req,res)=>{
     })
   } else {
     //validation passed
-    var userid  = req.body.userid;
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
-    var gender = req.body.gender;
-    var address = req.body.address;
-    var identity = req.body.identity;
+    userid  = req.body.userid;
+    name = req.body.name;
+    email = req.body.email;
+    password = req.body.password;
+    gender = req.body.gender;
+    address = req.body.address;
+    identity = req.body.identity;
 
     var found_userid;
     pool.query(appusers, [userid], (errors, data) => {
@@ -156,7 +156,7 @@ router.get('/logout',(req,res)=>{
  })
 
 
-var user;
+/*var user;
 pool.query(users, [userid], (errors, data) => {
   user = data;
 });
@@ -188,7 +188,7 @@ router.get('/dashboardp', (req, res) => {
     gender: user.gender,
     address: user.address
   });
-})
+})*/
 
 
 

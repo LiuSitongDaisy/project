@@ -6,14 +6,9 @@ const passport = require('passport');
 require("./routes/passport-config")(passport)
 const session = require('express-session');
 const flash = require('connect-flash');
+
 const expressEjsLayout = require('express-ejs-layouts');
-const initializePassport = require('./passport-config')
-const initialize = require('./passport-config')
-initializePassport(
-    passport, 
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
-)
+
 
 var createError = require('http-errors');
 var path = require('path');
