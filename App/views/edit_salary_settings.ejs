@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit Salary Settings</h1>
+    <p>
+        CareTaker:  <input type="text" name="username" id="userid">            
+    </p>
+    <p>
+        salary:  <input type="number" name="salary">
+    </p>
+    <p>
+        <button onclick="submit()">submit</button>
+    </p>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.js"></script>
+    <script>
+        function submit()
+        {
+            location.href='/salary?name='+$('#usernameid').val();
+        }
+    </script>
+</body>
+</html>
