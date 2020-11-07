@@ -16,13 +16,16 @@
 		<div id="ct-list">
 			<table class="table">
 				<thead>
-					<tr><th scope="colgroup" colspan="5">All requests</th></tr>
+					<tr><th scope="colgroup" colspan="8">Your requests</th></tr>
 					<tr>
 						<th scope="col">Pet ID</th>
 						<th scope="col">Start Date</th>
 						<th scope="col">End Date</th>
-						<th scope="col">Transfer Type</th>
-						<th scope="col">Payment Type</th>
+						<th scope="col">Transfer type</th>
+						<th scope="col">Payment method</th>
+						<th scope="col"><!-- View request --></th>
+						<th scope="col"><!-- Edit request --></th>
+						<th scope="col"><!-- Delete request --></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +36,9 @@
 						<td><%=data[i].e_date%></td>
 						<td><%=data[i].transfer_type%></td>
 						<td><%=data[i].payment_type%></td>
+						<td><a href="../../../request/<%=userid%>/<%=data[i].pet_id%>/<%=data[i].s_date%>"><button class="btn btn-secondary">View request</button></a></td>
+						<td><a href="../../../edit_request/<%=userid%>/<%=data[i].pet_id%>/<%=data[i].s_date%>"><button class="btn btn-secondary">Edit request</button></a></td>
+						<td><a href="../../../delete_request/<%=userid%>/<%=data[i].pet_id%>/<%=data[i].s_date%>"><button class="btn btn-secondary">Delete request</button></a></td>
 					</tr>
 				<% } %>
 				</tbody>

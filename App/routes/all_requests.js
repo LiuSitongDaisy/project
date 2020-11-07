@@ -9,7 +9,7 @@ const pool = new Pool({connectionString:process.env.DATABASE_URL})
 /* SQL Query */
 var all_petowner_query = 'SELECT 1 FROM PetOwners';
 var petowner_exist_query = 'SELECT 1 FROM PetOwners WHERE userid=$1';
-var requests_query = 'SELECT requests.pet_id, requests.s_date, requests.transfer_type, requests.payment_type, requests.e_date FROM requests, pets WHERE (requests.pet_id=pets.petid) AND pets.owner=$1;'
+var requests_query = 'SELECT requests.pet_id, TO_CHAR(requests.s_date, \'YYYY-MM-DD\') AS s_date, TO_CHAR(requests.e_date, \'YYYY-MM-DD\') AS e_date, requests.transfer_type, requests.payment_type FROM requests, pets WHERE (requests.pet_id=pets.petid) AND pets.owner=$1';
 
 /* Data */
 var userid;
@@ -27,7 +27,7 @@ router.get('/:userid', function(req, res, next) {
 			pool.query(petowner_exist_query, [userid], (err, data) => {
 				if (data.rows.length > 0) {
 						pool.query(requests_query, [userid], (err, data) => {
-							res.render('all_requests', {title: 'Requests', data: data.rows });
+							res.render('all_requests', {title: 'Requests', data: data.rows, userid : userid });
 						});
 				} else {
 					res.render('not_found_error', {component: 'userid'});
@@ -38,7 +38,6 @@ router.get('/:userid', function(req, res, next) {
 });
 
 // POST
-
 
 module.exports = router;
 
