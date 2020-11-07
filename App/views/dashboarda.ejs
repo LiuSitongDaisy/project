@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./dashboard.css">
+    <link rel="stylesheet" href="/stylesheets/dashboard.css">
 
     <title>Document</title>
 </head>
@@ -15,12 +15,12 @@
     <div class="middlenav">
         <p>Administrator Profile</p>
         <div class="avatar" href="">
-            <img src="./avatar.png" alt="avatar">
+            <img src="/images/avatar.png" alt="avatar">
             <div class="account">
                 <ul>
-                    <li><a class="panel" href="./edit_profile.html">Edit Profile</a></li>
-                    <li><a class="panel" href="./index.html">Log Out</a></li>
-                    <li><a class = "panel" href="">Find Care taker</a></li>
+                    <li><a class="panel" href="./edit_profile">Edit Profile</a></li>
+                    <li><a class="panel" href="./index">Log Out</a></li>
+                    <li><a class = "panel" href="./takers">Find Care taker</a></li>
                 </ul>
             </div>
         </div>
@@ -29,14 +29,22 @@
    
     
     <div class="profile">
-        <p class="item">username</p>
-        <a href="ess.html">Edit Salary Settings</a></br>
-        <a href="summary.html">Summary</a>
-        <p class="info">Lorem ipsum dolor sit amet. Ducimus, neque beatae, asperiores numquam soluta? Repudiandae, dolorum, nesciunt voluptates similique sequi placeat nisi earum vel excepturi odio quae atque minus nostrum quos quas optio natus repellendus nobis sed doloremque saepe veniam. Aut laudantium recusandae obcaecati officia, minus voluptate inventore repellat ipsam quisquam consectetur et deleniti quas omnis natus, dignissimos accusantium dolorum! Cum aspernatur, consequatur porro magni iste illo deserunt ab excepturi expedita incidunt praesentium! A, ab perferendis iusto amet excepturi at?</p>
+        <div>
+            <p class="item">Username: <%= userid %></p>
+            <p class="item">Name: <%= name %></p>
+            <p class="item">Email: <%= email %></p>
+            <p class="item">Gender: <%= gender %></p>
+            <p class="item">Address: <%= address %></p>
+        </div>
+
+        <div class="link">
+            <a class="left" href="ess.html">Edit Salary Settings</a></br> 
+            <a class="right" href="summary.html">Summary</a>
+        </div>
     </div>
 
     <div class="bottom">
-        <img src="./ad.jpg" alt="">
+        <img src="/images/ad.jpg" alt="">
     </div>
 </body>
 </html>

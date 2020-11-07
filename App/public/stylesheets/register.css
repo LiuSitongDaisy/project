@@ -53,8 +53,8 @@ body {
  
 .register form {
     background: rgba(255, 255, 255, 0.8);
-    height: 370px;
-    margin-top: 3em;
+    height: 410px;
+    margin-top: 2em;
 }
 
 form p > * {
@@ -65,7 +65,7 @@ form p > * {
 .label_input {
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
-    margin-top: 2em;
+    margin-top: 1.3em;
  
     width: 100px;
     height: 28px;
@@ -78,16 +78,16 @@ form p > * {
 }
 
 input {
-    margin-top: 2em;
+    margin-top: 1.3em;
 }
 
 .gender .label_input {
     margin-left: -115px;
-    margin-top: 2em;
+    margin-top: 1.3em;
 }
 
 .gender label {
-    margin-top: 1.5em;
+    margin-top: 1.1em;
     margin-left: 0.5em;
 }
 
@@ -96,14 +96,14 @@ input {
     cursor: default;
     appearance: radio;
     box-sizing: border-box;
-    margin-top: 2em;
+    margin-top: 1.2em;
     margin-left: 0.5em;
     padding: initial;
     border: initial;
 }
 
 .options {
-    margin-top: 2em;
+    margin-top: 1.3em;
 }
 
 .options p {

@@ -1,12 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const app = express();
+const bcrypt = require('bcrypt')
+const passport = require('passport');
+require("./routes/passport-config")(passport)
+const session = require('express-session');
+const flash = require('connect-flash');
 const expressEjsLayout = require('express-ejs-layouts');
+const initializePassport = require('./passport-config')
+const initialize = require('./passport-config')
+initializePassport(
+    passport, 
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
+)
 
 var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+var summaryinfoRouter = require('./routes/summary_info');
+app.use('/summary_info',summaryinfoRouter);
+
 
 var indexRouter = require('./routes/index');
 
@@ -27,6 +43,7 @@ var requestRouter = require('./routes/request');
 
 /* --- Log in, Register, Edit profile, User profiles */
 var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,10 +52,25 @@ app.use(expressEjsLayout);
 
 // BodyParser
 app.use(express.urlencoded({extended: false}));
+//express session
+app.use(session({
+  secret : 'secret',
+  resave : true,
+  saveUninitialized : true
+ }));
+app.use(passport.initialize());
+app.use(passport.session());
+ //use flash
+ app.use(flash());
+ app.use((req,res,next)=> {
+   res.locals.success_msg = req.flash('success_msg');
+   res.locals.error_msg = req.flash('error_msg');
+   res.locals.error  = req.flash('error');
+ next();
+ })
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -65,9 +97,14 @@ app.use('/request', requestRouter);
 app.use('/login', usersRouter);
 app.use('/register', usersRouter);
 app.use('/edit_profile', usersRouter);
-app.use('/dashboarda', usersRouter);
+app.use('/dashboarda', indexRouter);
 app.use('/dashboardc', usersRouter);
 app.use('/dashboardp', usersRouter);
+app.delete('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/login')
+})
+
 
 
 // catch 404 and forward to error handler
@@ -85,5 +122,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

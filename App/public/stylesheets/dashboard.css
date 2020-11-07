@@ -90,16 +90,31 @@ body {
 .profile {
     width: 52%;
     margin-left: 24%;
-    margin-top: -2em;
     font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
 }
 
 .profile .item {
     font-weight: bold;
     line-height: 2em;
+    margin-top: 0.8em;
 }
 
-.profile a {
+.profile .link {
+    margin-top: 1.5em;
+    position: relative;
+}
+
+.profile .link .left {
+    float: left;
+}
+
+.profile .link .right {
+    float: right;
+    margin-top: -1.2em;
+}
+ 
+.profile .link a {
     width: 150px;
     height: 2em;
     line-height: 2em;
@@ -108,21 +123,17 @@ body {
     background-color: rgb(210, 165, 117);
     border-radius: 6px;
     border: 0;
-    padding: 0 28px;
+    display: inline-block;
+    padding: 3px 28px;
+    text-align: center;
 }
 
 .profile a:hover {
     background-color: sandybrown;
 }
 
-.profile .info {
-    margin-top: 1.5em;
-}
-
 .bottom img {
     height: 230px;
     position: absolute;
     bottom: 0px;
-    margin-top: 2em;
-    margin-right: 2em;
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>Summary Info</h1>
+
+<table border="1" cellpadding="15" >
+    <tr>
+        
+        <th>Userid</th>
+        <th>salary</th>
+        <th>month</th>
+
+    </tr>
+    <%
+        for(let i=0;i<res.length;i++){
+    %>
+    <tr>
+        <td>
+            <%=res[i].userid%>
+        </td>
+        <td>
+            <%=res[i].salary%>
+        </td>
+        <td>
+            <%=res[i].month%>
+        </td>
+        
+        
+    </tr>
+    <%
+    }
+    %>
+    </table>
+</body>
+</html>
