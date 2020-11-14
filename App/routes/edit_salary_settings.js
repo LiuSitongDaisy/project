@@ -4,7 +4,7 @@ var router = express.Router();
 const { Pool } = require('pg')
 const pool = new Pool({connectionString:process.env.DATABASE_URL})
 
-var exist_caretaker_query = 'SELECT userid FROM CareTakers WHERE userid=&1';
+var exist_caretaker_query = 'SELECT userid FROM CareTakers WHERE userid=$1';
 var admin_exist_query = 'SELECT 1 FROM PSCAdministrators WHERE userid=$1';
 
 var insert_query = 'INSERT INTO Salary VALUES'
