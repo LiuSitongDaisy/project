@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/register.css">
+    
+    <script src="../routes/users.js"></script>
+    <title>EditProfile</title>
+</head>
+
+
+<body>
+    <div class="topnav">
+        <div class="title">Team 66 Pet Care</div>
+    </div>
+
+    <div class="register">
+        <%- include ('./partials/messages.ejs') %>
+        <form method="POST" action="./login.ejs">
+    
+            <p><label class="label_input">Username</label><input type="text" id="userid" class="text_field" name="userid" /></p>
+            <p><label class="label_input">Name</label><input type="text" id="name" class="text_field" name="name" /></p>
+            <p><label class="label_input">Email</label><input type="text" id="email" class="text_field" name="email" /></p>
+            <p><label class="label_input">Password</label><input type="password" id="password" class="text_field" name="password" /></p>
+            <p><label class="label_input">Address</label><input type="text" id="username" class="text_field" name="address" /></p>
+            <div class="gender">
+                <p><label class="label_input">Gender</label>
+                    <label class="op">Male</label>
+                    <input type="radio" id="male" class="radio" name="gender" />
+                    <label class="op">Female</label>
+                    <input type="radio" id="female" class="radio" name="gender">
+                </p>
+            </div>          
+            <div class="options">
+                <p>Identity</p>
+                <select id="select">
+                    <option value="caretaker">Care Taker</option>
+                    <option value="petowner">Pet Owner</option>
+                    <option value="administrator">Administrator</option>
+                </select>
+            </div>           
+            
+            <div id="register_control">
+                <input type="submit" id="btn_register" value="SAVE" onclick="return checkuser()"/>
+            </div>
+        </form>
+    </div>
+
+    <div class="bottom">
+        <img src="/images/ad.jpg" alt="">
+    </div>
+</body>
+</html>

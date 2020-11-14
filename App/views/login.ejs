@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogIn</title>
+    
+    <link rel="stylesheet" href="/stylesheets/login.css">
 
-    <link rel="stylesheet" href="../public/stylesheets/login.css">
-    <script src="../routes/login.js"></script>
+    <script src="/routes/users.js"></script>
+    <script src="../routes/index.js"></script>
+    <title>LogIn</title>
 </head>
 
 <body>
@@ -15,16 +17,20 @@
     </div>
 
     <div class="login">
+        
+    <form method="post">
  
-    <form method="post" action="login.js">
- 
-        <p><label class="label_input">username</label><input type="text" id="username" class="text_field" name="1" /></p>
-        <p><label class="label_input">password</label><input type="password" id="password" class="text_field" name="2" /></p>
+        <p><label class="label_input">Username</label><input type="text" id="username" class="text_field" name="username" /></p>
+        <p><label class="label_input">Password</label><input type="password" id="password" class="text_field" name="password" /></p>
  
         <div id="login_control">
-            <input type="submit" id="btn_login" value="login" οnclick="login();"/>
+            <input type="submit" id="btn_login" value="login"/>
         </div>
     </form>
+    </div>
+
+    <div class="bottom">
+        <img src="/images/ad.jpg" alt="">
     </div>
 </body>
 </html>

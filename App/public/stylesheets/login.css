@@ -45,7 +45,7 @@ body {
     margin-left: -200px;
     margin-top: -200px;
  
-    background-image: url(../../images/loginbg.png);
+    background-image: url(../images/loginbg.png);
  
     border-radius: 10px;
     text-align: center;
@@ -97,22 +97,25 @@ input {
     width: 150px;
     height: 32px;
     line-height: 28px;
-    text-align: center;
  
     color: white;
     background-color: rgb(210, 165, 117);
     border-radius: 6px;
     border: 0;
  
-    float: left;
     margin: 3em 6em;
+    padding: 0 28px;
 }
 
 #btn_login:hover{
     background-color: sandybrown;
 }
-
-
-#login_control {
-    padding: 0 28px;
+ 
+.bottom img {
+    height: 230px;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    margin-top: 2em;
+    margin-right: 2em;
 }

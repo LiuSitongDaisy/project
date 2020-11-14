@@ -36,16 +36,16 @@ body {
 
 .register {
     width: 400px;
-    height: 480px;
+    height: 520px;
     padding: 13px;
  
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -200px;
-    margin-top: -200px;
+    margin-top: -235px;
  
-    background-image: url(./loginbg.png);
+    background-image: url(/images/loginbg.png);
  
     border-radius: 10px;
     text-align: center;
@@ -53,8 +53,8 @@ body {
  
 .register form {
     background: rgba(255, 255, 255, 0.8);
-    height: 350px;
-    margin-top: 4em;
+    height: 480px;
+    margin-top: 2em;
 }
 
 form p > * {
@@ -65,12 +65,11 @@ form p > * {
 .label_input {
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
-    margin-top: 2em;
+    margin-top: 1.3em;
  
     width: 100px;
     height: 28px;
     line-height: 28px;
-    text-align: center;
  
     color: black;
     background: rgb(210, 165, 117);
@@ -79,13 +78,38 @@ form p > * {
 }
 
 input {
-    margin-top: 2em;
+    margin-top: 1.3em;
+}
+
+.gender .label_input {
+    margin-left: -115px;
+    margin-top: 1.3em;
+}
+
+.gender label {
+    margin-top: 1.1em;
+    margin-left: 0.5em;
+}
+
+.gender input[type="radio" i] {
+    background-color: initial;
+    cursor: default;
+    appearance: radio;
+    box-sizing: border-box;
+    margin-top: 1.2em;
+    margin-left: 0.5em;
+    padding: initial;
+    border: initial;
+}
+
+.options {
+    margin-top: 1.3em;
+    font-size: 14px;
 }
 
 .options p {
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
-    margin-top: 2em;
     margin-left: 0.8em;
  
     width: 100px;
@@ -100,13 +124,41 @@ input {
     border-bottom-left-radius: 5px;
 }
 
-.options select {
-    margin-top: 2em;
+.options .cb {
+    margin-top: 0.5em;
+}
+
+.opc {
+    height: 28px;
+    position: relative;
+}
+
+.opc p {
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 1.6em;
+    left: 0.8em;
+    position: absolute;
+ 
+    width: 250px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    float: left;
+ 
+    color: black;
+    background: rgb(210, 165, 117);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.opc select {
     margin-right: 0.8em;
+    margin-top: 1.6em;
     float: right;
 
     height: 28px;
-    width: 278px;
+    width: 129px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border: 0;
@@ -119,6 +171,37 @@ input {
     border-bottom-right-radius: 5px;
     border: 0;
 }
+
+.lb_input {
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 2.8em;
+    left: 1.8em;
+    position: absolute;
+ 
+    width: 225px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    float: left;
+ 
+    color: black;
+    background: rgb(210, 165, 117);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.txt_field {
+    width: 152px;
+    height: 28px;
+
+    float: right;
+    margin-right: -9.5em;
+    margin-top: 2.7em;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 0;
+}
  
 #btn_register {
     font-size: 14px;
@@ -127,13 +210,14 @@ input {
     width: 150px;
     height: 32px;
     line-height: 28px;
+    right: 2em;
  
     color: white;
     background-color: rgb(210, 165, 117);
     border-radius: 6px;
     border: 0;
  
-    margin: 3em 6em;
+    margin: 1.5em 6em;
     padding: 0 28px;
 }
 
@@ -141,3 +225,11 @@ input {
     background-color: sandybrown;
 }
  
+.bottom img {
+    height: 230px;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    margin-top: 2em;
+    margin-right: 2em;
+}

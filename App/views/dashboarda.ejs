@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/dashboard.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="topnav">
+        <div class="title">Team 66 Pet Care</div>
+    </div>
+
+    <div class="middlenav">
+        <p>Administrator Profile</p>
+        <div class="avatar" href="">
+            <img src="/images/avatar.png" alt="avatar">
+            <div class="account">
+                <ul>
+                    <li><a class="panel" href="./edit_profile">Edit Profile</a></li>
+                    <li><a class="panel" href="./index">Log Out</a></li>
+                    <li><a class = "panel" href="./takers">Find Care taker</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+   
+    
+    <div class="profile">
+        <div>
+            <p class="item">Username: <%= userid %></p>
+            <p class="item">Name: <%= name %></p>
+            <p class="item">Email: <%= email %></p>
+            <p class="item">Gender: <%= gender %></p>
+            <p class="item">Address: <%= address %></p>
+        </div>
+
+        <div class="link">
+            <a class="left" href="ess.html">Edit Salary Settings</a></br> 
+            <a class="right" href="summary.html">Summary</a>
+        </div>
+    </div>
+
+    <div class="bottom">
+        <img src="/images/ad.jpg" alt="">
+    </div>
+</body>
+</html>

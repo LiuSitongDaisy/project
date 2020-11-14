@@ -43,12 +43,13 @@ body {
 .welcome h1 {
     font-size: 1.5em;
     padding-bottom: 0.8em;
+    font-family: 'Comic Sans MS', 'Trebuchet MS', 'Lucida Sans Unicode', Arial, sans-serif;
 }
 
 .middlenav {
     height: 450px;
     width: 100%;
-    background-image: url(../../images/indexbg.jpg);
+    background-image: url(../images/indexbg.jpg);
     background-size: initial;
     background-repeat: no-repeat;
     background-position: center;
@@ -66,7 +67,7 @@ body {
     border-radius: 4px;
 }
 
-.middlenav .login{
+.middlenav .login {
     height: 20px;
     margin: 3em 2.5em;
     text-align: center;
@@ -79,6 +80,12 @@ body {
     margin: 3em 2.5em;
     text-align: center;
     line-height: 20px;
+    font-size: 1.2em;
+}
+
+.middlenav .takers {
+    height: 20px;
+    text-align: center;
     font-size: 1.2em;
 }
 
