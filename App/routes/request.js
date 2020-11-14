@@ -55,6 +55,8 @@ SELECT T.ct_id AS ct_id, U.name AS name, T.status AS status
 FROM Transactions T INNER JOIN Users U ON U.userid=T.ct_id
 WHERE T.pet_id=$1 AND T.s_date=$2
  */
+var update_transfer_query = 'UPDATE Requests SET transfer_type=$1 WHERE pet_id=$2 AND s_date=$3';
+var update_payment_query = 'UPDATE Requests SET payment_type=$1 WHERE pet_id=$2 AND s_date=$3';
 
 /* Data */
 var userid;
@@ -124,6 +126,20 @@ router.post('/:userid/:petid/:s_date/review', function(req, res, next) {
 			res.redirect("/request/" + userid + "/" + petid + "/" + getString(s_date));
 		})
 	});
+});
+
+router.post('/:userid/:petid/:s_date/edit_request', function(req, res, next) {
+	userid = req.params.userid; //TODO: Need to replace with user session id
+	petid = req.params.petid;
+	s_date = new Date(req.params.s_date);
+	var transfer_type = req.body.transfer;
+	var payment_method = req.body.payment;
+	pool.query(update_transfer_query, [transfer_type, petid, getString(s_date)], (err, data) => {
+		pool.query(update_payment_query, [payment_method, petid, getString(s_date)], (err, data) => {
+			console.log("Updated the transaction of " + petid + " on " + getString(s_date) + " with transfer type " + transfer_type + " and payment method " + payment_method);
+			res.redirect("/request/" + userid + "/" + petid + "/" + getString(s_date));
+		})
+	})
 });
 
 module.exports = router;

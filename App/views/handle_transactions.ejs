@@ -83,14 +83,14 @@
 		</div>
 		<div id="request-form" style="display: none">
 			<label for="select-transfer-type">Transfer type: </label>
-			<select name="transfer" class="form-control" style="width: 30%; display: inline-flex" id="select-transfer-type">
+			<select name="transfer" class="form-control" style="width: 30%; display: inline-flex" id="select-transfer-type" form="html_form">
 				<option value="deliver" <%=transfer_type === 'deliver' ? 'selected' : ''%>>deliver</option>
 				<option value="pick-up" <%=transfer_type === 'pick-up' ? 'selected' : ''%>>pick-up</option>
 				<option value="transfer at building" <%=transfer_type === 'transfer at building' ? 'selected' : ''%>>transfer at the PSC building</option>
 			</select>
 			<br />
 			<label for="select-payment-method">Paymen method: </label>
-			<select name="payment" class="form-control" style="width: 30%; display: inline-flex" id="select-payment-method">
+			<select name="payment" class="form-control" style="width: 30%; display: inline-flex" id="select-payment-method" form="html_form">
 				<option value="card" <%=payment_method === 'card' ? 'selected' : ''%>>card</option>
 				<option value="cash" <%=payment_method === 'cash' ? 'selected' : ''%>>cash</option>
 			</select>

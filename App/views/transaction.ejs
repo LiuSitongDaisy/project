@@ -24,13 +24,20 @@
 				  b.innerText = "Edit review";
 			  }
 		  }
+		  const toggleEditRequest = () => {
+		  	document.getElementById("request-type-display").style.display = "none";
+		  	document.getElementById("request-type-form").style.display = "block";
+		  	document.getElementById("edit-request-btn").style.display = "none";
+		  	document.getElementById("save-request-btn").style.display = "inline-flex";
+		  }
 	  </script>
   </head>
   <body>
     <h1><%= title%> of your <%=transaction.pet_category%> <%=transaction.pet_name%> from <%=s_date%> to <%=e_date%></h1>
 	<div id="header-btn-group">
 		<a href="../../../test"><button class="btn btn-secondary">Edit pet profile</button></a> <!-- TODO: Change to actual edit path -->
-		<a href="../../../test"><button class="btn btn-secondary">Edit request details</button></a> <!-- TODO: Change to actual edit request path -->
+		<button class="btn btn-secondary" type="button" onclick="toggleEditRequest()" id="edit-request-btn">Edit request details</button>
+		<button class="btn btn-secondary" type="submit" form="html_form" formaction="<%=s_date%>/edit_request" style="display: none" id="save-request-btn">Save request details</button>
 		<a href="../../../test"><button class="btn btn-secondary">Back</button></a> <!-- TODO: Change to actual pet path -->
 	</div>
 	<br />
@@ -47,14 +54,31 @@
 			<span style="padding-left: 30px"></span>
 			<b>End date: </b><%=e_date%>
 		</p>
-		<p id="transaction-detail">
-			<b>Transfer type: </b><%=transaction.transfer_type%>
-			<span style="padding-left: 30px"></span>
-			<b>Payment method: </b><%=transaction.payment_type%>
-			<span style="padding-left: 30px"></span>
-			<b>Cost: </b><%=transaction.cost%>
-		</p>
+		<div id="request-type-detail">
+			<div id="request-type-display">
+				<p>
+					<b>Transfer type: </b><%=transaction.transfer_type%>
+					<span style="padding-left: 30px"></span>
+					<b>Payment method: </b><%=transaction.payment_type%>
+				</p>
+			</div>
+			<div id="request-type-form" style="display: none">
+				<label for="select-transfer-type">Transfer type: </label>
+				<select name="transfer" class="form-control" style="width: 30%; display: inline-flex" id="select-transfer-type" form="html_form">
+					<option value="deliver" <%=transaction.transfer_type === 'deliver' ? 'selected' : ''%>>deliver</option>
+					<option value="pick-up" <%=transaction.transfer_type === 'pick-up' ? 'selected' : ''%>>pick-up</option>
+					<option value="transfer at building" <%=transaction.transfer_type === 'transfer at building' ? 'selected' : ''%>>transfer at the PSC building</option>
+				</select>
+				<label for="select-payment-method">Paymen method: </label>
+				<select name="payment" class="form-control" style="width: 30%; display: inline-flex" id="select-payment-method" form="html_form">
+					<option value="card" <%=transaction.payment_type === 'card' ? 'selected' : ''%>>card</option>
+					<option value="cash" <%=transaction.payment_type === 'cash' ? 'selected' : ''%>>cash</option>
+				</select>
+			</div>
+		</div>
 		<p id="care-taker">
+			<b>Cost: </b><%=transaction.cost%>
+			<span style="padding-left: 30px"></span>
 			<b>Care Taker: </b><%=transaction.ct_id%>
 			<a href="../../../test" target="_blank"><button type="button" class="btn btn-secondary">View care taker profile</button></a> <!-- TODO: Use actual care taker view path -->
 		</p>

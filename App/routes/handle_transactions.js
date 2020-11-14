@@ -81,13 +81,13 @@ var ct_name_filter = 'AND U.name LIKE \'%\'||$5||\'%\''; // $5 = user name conta
 var full_time_filter = 'AND CT.userid IN (SELECT F.userid FROM FullTimeCareTakers F)';
 var part_time_filter = 'AND CT.userid IN (SELECT P.userid FROM PartTimeCareTakers P)';
 var avg_rating_filter = 'AND CT.rating >= $6'; // $6 = average rating should be >= this
-var can_take_care_filter = 'AND $1 IN (SELECT category FROM CanTakeCare C WHERE C.ct_id=CT.userid)';
+var can_take_care_filter = 'AND CTC.daily_price IS NOT NULL';
 var daily_price_filter = 'AND CTC.daily_price <= $7'; // $7 = daily price no larger than this
 var experience_pc_filter = 'AND EXISTS(SELECT 1 FROM Transactions T INNER JOIN Pets P ON T.pet_id=P.petid WHERE T.ct_id=CT.userid AND P.category=$1 AND T.status=\'Confirmed\')';
 var pc_avg_rate_filter = 'AND (SELECT AVG(rate) FROM Transactions T INNER JOIN Pets P ON T.pet_id=P.petid WHERE T.ct_id=CT.userid AND P.category=$1) >= $8'; // $8 = avg rating of the pet category;
 var history_requested_filter = 'AND EXISTS(SELECT 1 FROM Transactions T INNER JOIN Pets P ON T.pet_id=P.petid WHERE T.ct_id=CT.userid AND P.owner=$9)'; // $9 = this userid
 var history_confirmed_filter = 'AND EXISTS(SELECT 1 FROM Transactions T INNER JOIN Pets P ON T.pet_id=P.petid WHERE T.ct_id=CT.userid AND P.owner=$9 AND T.status=\'Confirmed\')';
-var my_avg_rate_filter = 'AND (SELECT AVG(rate) FROM Transactions T INNER JOIN Pets P ON T.pet_id=P.petid where T.ct_id=CT.userid AND P.owner=$9) >= $10'; // $10 = avg rating by me;
+var my_avg_rate_filter = 'AND (SELECT AVG(rate) FROM Transactions T INNER JOIN Pets P ON T.pet_id=P.petid WHERE T.ct_id=CT.userid AND P.owner=$9) >= $10'; // $10 = avg rating by me;
 var history_pet_requested_filter = 'AND EXISTS(SELECT 1 FROM Transactions T WHERE T.ct_id=CT.userid AND T.pet_id=$11)'; // $11 = this pet id
 var history_pet_confirmed_filter = 'AND EXISTS(SELECT 1 FROM Transactions T WHERE T.ct_id=CT.userid AND T.pet_id=$11 AND T.status=\'Confirmed\')';
 var safe_guard = 'AND $4 <> \'!\' AND $5 <> \'!\' AND $6 >= 0 AND $7 >= 0 AND $8 >= 0 AND $9 <> \'!\' AND $10 >= 0 AND $11 <> \'!\'';
@@ -104,6 +104,8 @@ var delete_request_query = 'DELETE FROM Requests WHERE pet_id=$1 AND s_date=$2';
 var delete_empty_request_qeury = 'CALL delete_empty_request($1, $2)';
 var withdraw_query = 'UPDATE Transactions SET status=\'Withdrawn\' WHERE pet_id=$1 AND s_date=$2 AND ct_id=$3';
 var individual_request_query = 'SELECT send_request_success($1, $2, $3)'; // $1=petid, $2=s_date, $3=ct_id
+var update_transfer_query = 'UPDATE Requests SET transfer_type=$1 WHERE pet_id=$2 AND s_date=$3';
+var update_payment_query = 'UPDATE Requests SET payment_type=$1 WHERE pet_id=$2 AND s_date=$3';
 
 /* Data */
 var userid;
@@ -349,8 +351,12 @@ router.post('/:userid/:petid/:s_date/edit', function(req, res, next) {
 	readInput(req);
 	transfer_type = req.body.transfer;
 	payment_method = req.body.payment;
-	console.log(transfer_type);
-	console.log(payment_method);
+	pool.query(update_transfer_query, [transfer_type, petid, getString(s_date)], (err, data) => {
+		pool.query(update_payment_query, [payment_method, petid, getString(s_date)], (err, data) => {
+			console.log("Updated the transaction of " + petid + " on " + getString(s_date) + " with transfer type " + transfer_type + " and payment method " + payment_method);
+			redirectHere(res);
+		})
+	})
 });
 
 module.exports = router;
