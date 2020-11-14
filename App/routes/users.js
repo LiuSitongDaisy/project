@@ -2,9 +2,9 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const initialize = require('./passport-config');
+//const initialize = require('./passport-config');
 require('dotenv').config({path: __dirname + '/../.env'});
-const expressEjsLayout = require('express-ejs-layouts');
+/*const expressEjsLayout = require('express-ejs-layouts');*/
 const { Pool } = require('pg');
 const { query } = require('express');
 const pool = new Pool({connectionString:process.env.DATABASE_URL})
@@ -159,7 +159,7 @@ router.get('/logout',(req,res)=>{
 /*var user;
 pool.query(users, [userid], (errors, data) => {
   user = data;
-});
+}); 
 router.get('/dashboarda', (req, res) => {
   res.render('/dashboarda', {
     userid: req.userid,

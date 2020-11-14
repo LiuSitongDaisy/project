@@ -16,7 +16,6 @@
     </div>
 
     <div class="register">
-        <%- include ('./partials/messages.ejs') %>
         <form method="POST" action="./login.ejs">
     
             <p><label class="label_input">Username</label><input type="text" id="userid" class="text_field" name="userid" /></p>
@@ -34,12 +33,20 @@
             </div>          
             <div class="options">
                 <p>Identity</p>
+                <input class="cb" type="checkbox" name="identity" id="administrator">Administrator
+                <input class="cb" type="checkbox" name="identity" id="caretaker">Care Taker
+                <input class="cb" type="checkbox" name="identity" id="petowner">Pet Owner
+            </div>
+
+            <div class="opc">
+                <p>Care Taker Type(if selected Care Taker)</p>
                 <select id="select">
-                    <option value="caretaker">Care Taker</option>
-                    <option value="petowner">Pet Owner</option>
-                    <option value="administrator">Administrator</option>
+                    <option value="fcaretaker">Full-time</option>
+                    <option value="pcaretaker">Part-time</option>
                 </select>
-            </div>           
+            </div> 
+            
+            <p><label class="lb_input">Pet Categories Can Take Care</label><input type="text" id="userid" class="txt_field" name="userid" /></p>
             
             <div id="register_control">
                 <input type="submit" id="btn_register" value="SIGN UP" onclick="return checkuser()"/>

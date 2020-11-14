@@ -3,11 +3,11 @@ const router = express.Router();
 const app = express();
 const bcrypt = require('bcrypt')
 const passport = require('passport');
-require("./routes/passport-config")(passport)
+//require("./routes/passport-config")(passport)
 const session = require('express-session');
 const flash = require('connect-flash');
 
-const expressEjsLayout = require('express-ejs-layouts');
+//const expressEjsLayout = require('express-ejs-layouts');
 
 
 var createError = require('http-errors');
@@ -43,7 +43,7 @@ var indexRouter = require('./routes/index');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(expressEjsLayout);
+//app.use(expressEjsLayout);
 
 // BodyParser
 app.use(express.urlencoded({extended: false}));
@@ -92,7 +92,7 @@ app.use('/request', requestRouter);
 app.use('/login', usersRouter);
 app.use('/register', usersRouter);
 app.use('/edit_profile', usersRouter);
-app.use('/dashboarda', indexRouter);
+app.use('/dashboarda', usersRouter);
 app.use('/dashboardc', usersRouter);
 app.use('/dashboardp', usersRouter);
 app.delete('/logout', (req, res) => {
