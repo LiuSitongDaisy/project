@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<!-- Page Title -->
+    <title><%= title%></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+		
+		<!-- CSS for Styling -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+		
+		<!-- JavaScript for Interactivity -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+	  <script>
+		  const toggle = () => {
+		  	let t = document.getElementById("newCategory");
+			let b = document.getElementById("new-category-btn");
+			let e = document.getElementById("categoryErr");
+		  	if (t.style.display === "none") {
+		  		t.style.display = "block";
+		  		e.style.display = "block";
+				b.innerText = "Cancel";
+			} else {
+		  		t.style.display = "none";
+		  		e.style.display = "none";
+		  		t.nodeValue = "";
+				b.innerText = "New Category";
+			}
+		  };
+	  </script>
+  </head>
+  <body>
+    <h1><%= title%></h1>
+	<form id="html_form" role="form" method="post">
+		<label for="type-select">Type of Care Taker: </label>
+		<select class="form-control" id="type-select" name="type">
+			<option value="">All</option>
+			<option value="full-time">Full time only</option>
+		</select>
+		<label for="pet-category-select">Care Takers for Pet Category: </label>
+		<select class="form-control" id="pet-category-select" name="category">
+			<option value="all">all</option>
+			<% for (var i=0; i<categories.length; i++) { %>
+				<option value="<%=categories[i].name%>"><%=categories[i].name%></option>
+			<% } %>
+		</select>
+		<br />
+		<button type="submit" class="btn btn-primary" formaction="/all_caretakers">Filter</button>
+	</form>
+	<br />
+    <div id="all-ct-table">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="colgroup" colspan="6">All registered care takers according to the filter</th>
+				</tr>
+				<tr>
+					<th scope="col">Care Taker ID</th>
+					<th scope="col">Name</th>
+					<th scope="col">Gender</th>
+					<th scope="col">Type</th>
+					<th scope="col">Rating</th>
+					<th scope="col"><!-- View profile --></th>
+				</tr>
+			</thead>
+			<tbody>
+			<% for (var i=0; i<caretakers.length; i++) { %>
+				<tr>
+					<td><%= caretakers[i].userid%></td>
+					<td><%= caretakers[i].name%></td>
+					<td><%= caretakers[i].gender%></td>
+					<td><%= caretakers[i].category%></td>
+					<td><%= caretakers[i].rating ? Math.round(caretakers[i].rating * 10) / 10 : ''%></td>
+					<td><a href="../view_caretaker/<%=caretakers[i].userid%>" target="_blank"><button type="button" class="btn btn-secondary">View profile</button></a></td>
+				</tr>
+			<% } %>
+			</tbody>
+		</table>
+	</div>
+  </body>
+</html>

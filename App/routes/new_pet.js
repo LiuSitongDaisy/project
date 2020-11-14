@@ -73,8 +73,8 @@ router.get('/:userid', function(req, res, next) {
 // POST
 router.post('/:userid', function(req, res, next) {
 	// Retrieve Information
-	var petid  = req.body.petid;
-	var name    = req.body.name;
+	var petid  = req.body.petid.toLowerCase().trim();
+	var name    = req.body.name.trim();
 	var category = req.body.category;
 	var owner = req.params.userid; //TODO: Need to replace with user session id
 	var requirements = req.body.requirements;
@@ -115,7 +115,7 @@ router.post('/:userid', function(req, res, next) {
 		var len = str.length;
 		for (var i=0; i<len && isValid; i++) {
 			var c = str.charAt(i);
-			if (!((c < 'z' && c > 'a') || (c = ' '))) {
+			if (!((c < 'z' && c > 'a') || (c === ' ') || (c === '-') || (c === ','))) {
 				isValid = false;
 				categoryErr = "* The pet category should consist of letters and white space only.";
 			}
@@ -142,7 +142,7 @@ router.post('/:userid', function(req, res, next) {
 
 		pool.query(insert_query, (err, data) => {
 			console.log("Inserted new pet: { petid:" + petid + ", name:" + name + ", category:" + category + ", owner:" + owner + ", requirements:" + requirements + "}" )
-			res.redirect('/test'); //TODO: Need to update
+			res.redirect('/test'); //TODO: Need to update to pet view page
 		});
 	} else {
 		res.render('new_pet', {
