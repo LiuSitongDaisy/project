@@ -12,6 +12,7 @@ var renderTransaction = (res) => {
 	res.render('transaction', {
 		title: 'Transaction',
 		petid: petid,
+		userid: userid,
 		s_date: getString(s_date),
 		e_date: getString(transaction.e_date),
 		transaction: transaction

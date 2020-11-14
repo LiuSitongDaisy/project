@@ -30,6 +30,10 @@ var loopsRouter = require('./routes/loops');
 var selectRouter = require('./routes/select');
 /* ---------------------------- */
 
+/* --- Open access ------------ */
+var allCaretakersRouter = require('./routes/all_caretakers')
+var viewCaretakerRouter = require('./routes/view_caretaker')
+
 /* --- Pet Owner -------------- */
 var newPetRouter = require('./routes/new_pet');
 var newRequestRouter = require('./routes/new_request');
@@ -85,6 +89,10 @@ app.use('/loops', loopsRouter);
 /* --- V4: Database Connect --- */
 app.use('/select', selectRouter);
 /* ---------------------------- */
+
+/* --- Open access ------------ */
+app.use('/all_caretakers', allCaretakersRouter);
+app.use('/view_caretaker', viewCaretakerRouter);
 
 /* --- Pet Owner -------------- */
 app.use('/new_pet', newPetRouter);

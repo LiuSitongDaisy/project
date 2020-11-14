@@ -87,7 +87,7 @@
 						<td><%=caretakers[i].name%></td>
 						<td><%=caretakers[i].cost%></td>
 						<td><%=caretakers[i].status%></td>
-						<td><a href="../../../test" target="_blank"><button type="button" class="btn btn-secondary">View profile</button></a></td> <!-- TODO: Change to actual view path -->
+						<td><a href="../../../view_caretaker/<%=caretakers[i].ct_id%>/<%=userid%>" target="_blank"><button type="button" class="btn btn-secondary">View profile</button></a></td>
 					</tr>
 				<% } %>
 			</tbody>
